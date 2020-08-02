@@ -57,7 +57,7 @@ public class ItIsFlooding {
             
             if (r.Storm_Surge__c > maxStorm) {
                 maxStorm = r.Storm_Surge__c;
-            } if (r.Preliminary_Height__c > maxTidal) {
+            } if (r.Preliminary_Height__c - HighTide.populate().get(string.ValueOf(wr.WaterSensor__r.Name))> maxTidal) {
                 maxTidal = r.Preliminary_Height__c - HighTide.populate().get(string.ValueOf(wr.WaterSensor__r.Name));
             }            
         }
