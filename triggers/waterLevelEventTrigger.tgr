@@ -1,0 +1,18 @@
+trigger waterLevelEventTrigger on Water_Level_Reading__e (after insert) {
+	List<Water_Reading__c> readings = new List<Water_Reading__c>();
+    
+    for (Water_Level_Reading__e event : Trigger.New) {
+        Water_Reading__c o = new Water_Reading__c();
+        o.DateTime__c = event.DateTime__c;
+        o.WaterSensor__c = event.Sensor__c;
+        o.Preliminary_Height__c = event.Preliminary_Height__c;
+        o.Predicted_Height__c = event.Predicted_Height__c;
+        readings.add(o);
+    }
+    
+    upsert readings;
+    
+    DateTime toDeleteDate = [SELECT DateTime__c FROM Water_Reading__c ORDER BY DateTime__c DESC LIMIT 1].DateTime__c;
+    DeleteSimilarRecordsc.byDateTime(toDeleteDate);
+    
+}
