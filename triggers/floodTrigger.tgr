@@ -3,7 +3,7 @@ trigger floodTrigger on Water_Reading__c (after insert) {
 	List<Flood__c> floods = new List<Flood__c>();
     
     for (Water_Reading__c wr : Trigger.New) {
-        if (wr.Preliminary_Height__c  >= 1.6) {
+        if (wr.Storm_Surge__c  >= 1.5) {
             floods.add(ItIsFlooding.create_flood(wr));
         } else {continue;}
     }
