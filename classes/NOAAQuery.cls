@@ -15,18 +15,19 @@ public class NOAAQuery {
             system.debug('Invalid dataType input.');
         }
         //Creating URL for Request
-        string URL = 'https://tidesandcurrents.noaa.gov/api/datagetter?' +
-            'date=latest' + 
-            '&'+'station=' + station +
-            '&'+'product=' + dataType +  
-            '&'+'datum=MSL&units=english&time_zone=GMT&application=Salesforce&format=json';
-        system.debug(URL);
+        string URL = 'https://api.tidesandcurrents.noaa.gov:443/api/prod/datagetter?';
+        string payload = 'date=latest' + 
+            			 '&'+'station=' + station +
+            			 '&'+'product=' + dataType +  
+            			 '&'+'datum=MSL&units=english&time_zone=GMT&application=Salesforce&format=json';
+        system.debug(payload);
         
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setTimeout(60000);
         request.setEndpoint(URL);
         request.setMethod('GET');
+        request.setBody(payload);
         HttpResponse response = http.send(request);
         system.debug(response.getBody());
         integer counter = 0;
@@ -39,6 +40,7 @@ public class NOAAQuery {
         while (counter <= hitRepeats  && (response.getStatusCode() == 504 || returnValue.contains(errorContent) || returnValue.contains(htmlContent))) {          
             //handle error
             system.debug('504 error handling...');
+            system.debug(response.getHeader('Location'));
             //if we have hit the site desired number of times, pass dummy values
             if (counter == hitRepeats) {
                 if (dataType == 'predictions') {
