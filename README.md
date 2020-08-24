@@ -12,5 +12,9 @@ Visualizing weather in LWC in the following repository https://github.com/rgoodm
 
 ## Media
 ![Display of Wilmington during Hurricane Isais](/media/dashboardWilmington.gif)
+![Display of Daily View from 8/24 (Final Presentation)](/media/FutureForce Demo Slides.pdf)
+
+## Slides
+![Presentation Slides](/media/FutureForce Demo Slides.pdf)
 
 
